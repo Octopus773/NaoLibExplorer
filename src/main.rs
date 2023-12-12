@@ -1,14 +1,22 @@
 use gtk::prelude::*;
 use gtk::{glib, Application, ApplicationWindow, Button};
+use tokio;
+mod api;
+
+use api::waiting_times::get_waiting_times;
 
 const APP_ID: &str = "org.Octopus773.Naolibexplorer";
 
-fn main() -> glib::ExitCode {
+#[tokio::main]
+async fn main() -> glib::ExitCode {
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 
     // Connect to "activate" signal of `app`
     app.connect_activate(build_ui);
+
+    let res = get_waiting_times().await.unwrap();
+    println!("{:#?}", res);
 
     // Run the application
     app.run()
