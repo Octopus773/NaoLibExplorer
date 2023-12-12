@@ -2,6 +2,7 @@ use gtk::prelude::*;
 use gtk::{glib, Application, ApplicationWindow, Button};
 use tokio;
 mod api;
+mod naolibexplorer;
 
 use api::waiting_times::get_waiting_times;
 
@@ -16,7 +17,7 @@ async fn main() -> glib::ExitCode {
     app.connect_activate(build_ui);
 
     let res = get_waiting_times().await.unwrap();
-    println!("{:#?}", res);
+    println!("{:#?}", &res);
 
     // Run the application
     app.run()
