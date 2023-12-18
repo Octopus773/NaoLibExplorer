@@ -2,13 +2,6 @@ use crate::naolibexplorer::WaitingTime;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
-enum Line {
-	TRAMWAY(String),
-	BUS(String),
-	BUSWAY(String),
-}
-
-#[derive(Serialize, Deserialize, Debug)]
 struct LineDTO {
 	#[serde(rename = "numLigne")]
 	num_line: String,
@@ -54,8 +47,9 @@ fn to_waiting_time(wt: WaitingTimeDTO) -> WaitingTime {
 		num_line: wt.ligne.num_line,
 		line_type: match wt.ligne.line_type {
 			1 => crate::naolibexplorer::LineType::TRAMWAY,
-			2 => crate::naolibexplorer::LineType::BUS,
-			3 => crate::naolibexplorer::LineType::BUSWAY,
+			2 => crate::naolibexplorer::LineType::BUSWAY,
+			3 => crate::naolibexplorer::LineType::BUS,
+			4 => crate::naolibexplorer::LineType::NAVIBUS,
 			_ => panic!("Unknown line type"),
 		},
 	}
