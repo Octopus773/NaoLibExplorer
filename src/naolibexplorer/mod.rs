@@ -37,6 +37,19 @@ pub struct WaitingTime {
 }
 
 #[derive(Debug)]
+pub struct Section {
+	// don't know yet how to represent this
+	pub raw_data: String,
+}
+
+#[derive(Debug)]
+pub struct InfoTraficStop {
+	pub num_line: String,
+	pub direction: i32,
+	pub codes: Vec<String>,
+}
+
+#[derive(Debug)]
 pub struct InfoTrafic {
 	pub code: String,
 	pub language: i32,
@@ -48,6 +61,6 @@ pub struct InfoTrafic {
 	pub start_time: Option<NaiveTime>,
 	pub end_time: Option<NaiveTime>,
 	pub disruption_ended: i32,
-	pub sections: String,
-	pub stops: String,
+	pub sections: Vec<Section>,
+	pub stops: Vec<InfoTraficStop>,
 }
