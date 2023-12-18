@@ -2,9 +2,10 @@ use chrono::{NaiveDate, NaiveTime};
 
 #[derive(Debug)]
 pub enum LineType {
-	TRAMWAY,
-	BUS,
-	BUSWAY,
+	TRAMWAY = 1,
+	BUSWAY = 2,
+	BUS = 3,
+	NAVIBUS = 4,
 }
 
 #[derive(Debug)]
@@ -14,6 +15,18 @@ pub struct Line {
 	pub directions: Option<[String; 2]>,
 	pub accessible: Option<bool>,
 	pub traffic_status: Option<i32>,
+}
+
+impl Line {
+	pub fn new(num_line: String, line_type: LineType) -> Line {
+		Line {
+			num_line,
+			line_type,
+			directions: None,
+			accessible: None,
+			traffic_status: None,
+		}
+	}
 }
 
 #[derive(Debug)]
@@ -63,4 +76,12 @@ pub struct InfoTrafic {
 	pub disruption_ended: i32,
 	pub sections: Vec<Section>,
 	pub stops: Vec<InfoTraficStop>,
+}
+
+#[derive(Debug)]
+pub struct GeoStop {
+	pub code_stop: String,
+	pub name: String,
+	pub distance: u32,
+	pub lines: Vec<Line>,
 }

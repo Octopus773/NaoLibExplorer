@@ -17,7 +17,7 @@ async fn main() -> glib::ExitCode {
 	// Connect to "activate" signal of `app`
 	app.connect_activate(build_ui);
 
-	let res = get_info_trafic().await.unwrap();
+	let res = get_near_stops(47.2059591, -1.5605108).await.unwrap();
 	println!("{:#?}", &res);
 
 	// Run the application
