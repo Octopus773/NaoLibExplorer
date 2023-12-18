@@ -51,13 +51,13 @@ struct InfoTrafficStopDTO {
 
 fn to_info_traffic_stop(its_dto: InfoTrafficStopDTO) -> Result<InfoTraficStop, Box<dyn Error>> {
 	Ok(InfoTraficStop {
-		num_line: its_dto.line.clone(),
+		num_line: its_dto.line,
 		direction: its_dto.direction.parse()?,
 		codes: its_dto.codes.split(',').map(|s| s.to_owned()).collect(),
 	})
 }
 
-fn to_info_trafic(s: &InfoTraficDTO) -> Result<InfoTrafic, Box<dyn Error>> {
+fn to_info_trafic(s: InfoTraficDTO) -> Result<InfoTrafic, Box<dyn Error>> {
 	#[derive(Deserialize)]
 	struct Tmp {
 		#[serde(rename = "LISTE_ARRETS")]
@@ -72,11 +72,11 @@ fn to_info_trafic(s: &InfoTraficDTO) -> Result<InfoTrafic, Box<dyn Error>> {
 			break 'sdb vec![];
 		}
 		if stops_data_obj.sl.is_object() {
-			let s: InfoTrafficStopDTO = serde_json::from_value(stops_data_obj.sl.clone())?;
+			let s: InfoTrafficStopDTO = serde_json::from_value(stops_data_obj.sl)?;
 			break 'sdb vec![to_info_traffic_stop(s)?];
 		}
 		if stops_data_obj.sl.is_array() {
-			let s: Vec<InfoTrafficStopDTO> = serde_json::from_value(stops_data_obj.sl.clone())?;
+			let s: Vec<InfoTrafficStopDTO> = serde_json::from_value(stops_data_obj.sl)?;
 			let res = s
 				.into_iter()
 				.map(to_info_traffic_stop)
@@ -91,11 +91,11 @@ fn to_info_trafic(s: &InfoTraficDTO) -> Result<InfoTrafic, Box<dyn Error>> {
 	};
 
 	Ok(InfoTrafic {
-		code: s.code.clone(),
+		code: s.code,
 		language: s.language,
-		header: s.header.clone(),
-		brief: s.brief.clone(),
-		vocal_text: s.vocal_text.clone(),
+		header: s.header,
+		brief: s.brief,
+		vocal_text: s.vocal_text,
 		start_date: s.start_date,
 		end_date: s.end_date,
 		start_time: s.start_time,
@@ -118,7 +118,7 @@ pub async fn get_info_trafic() -> Result<Vec<InfoTrafic>, Box<dyn std::error::Er
         .json::<InfoTraficListDTO>()
         .await?
 		.results
-		.iter()
+		.into_iter()
 		.map(to_info_trafic)
 		.collect::<Result<_, _>>();
 

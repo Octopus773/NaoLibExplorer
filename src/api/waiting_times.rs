@@ -38,28 +38,26 @@ struct WaitingTimeDTO {
 	pub stop: StopDTO,
 }
 
-impl WaitingTimeDTO {
-	pub fn to_waiting_time(&self) -> WaitingTime {
-		WaitingTime {
-			direction: self.sens,
-			terminus: self.terminus.clone(),
-			info_trafic: self.info_trafic,
-			display_time_fr: if !self.temps.is_empty() {
-				Some(self.temps.clone())
-			} else {
-				None
-			},
-			last_departure: self.last_departure.parse::<bool>().unwrap(),
-			is_real_time: self.is_real_time.parse::<bool>().unwrap(),
-			code_stop: self.stop.code_stop.clone(),
-			num_line: self.ligne.num_line.clone(),
-			line_type: match self.ligne.line_type {
-				1 => crate::naolibexplorer::LineType::TRAMWAY,
-				2 => crate::naolibexplorer::LineType::BUS,
-				3 => crate::naolibexplorer::LineType::BUSWAY,
-				_ => panic!("Unknown line type"),
-			},
-		}
+fn to_waiting_time(wt: WaitingTimeDTO) -> WaitingTime {
+	WaitingTime {
+		direction: wt.sens,
+		terminus: wt.terminus,
+		info_trafic: wt.info_trafic,
+		display_time_fr: if !wt.temps.is_empty() {
+			Some(wt.temps)
+		} else {
+			None
+		},
+		last_departure: wt.last_departure.parse::<bool>().unwrap(),
+		is_real_time: wt.is_real_time.parse::<bool>().unwrap(),
+		code_stop: wt.stop.code_stop,
+		num_line: wt.ligne.num_line,
+		line_type: match wt.ligne.line_type {
+			1 => crate::naolibexplorer::LineType::TRAMWAY,
+			2 => crate::naolibexplorer::LineType::BUS,
+			3 => crate::naolibexplorer::LineType::BUSWAY,
+			_ => panic!("Unknown line type"),
+		},
 	}
 }
 
@@ -68,8 +66,8 @@ pub async fn get_waiting_times() -> Result<Vec<WaitingTime>, Box<dyn std::error:
 		.await?
 		.json::<Vec<WaitingTimeDTO>>()
 		.await?
-		.iter()
-		.map(|x| x.to_waiting_time())
+		.into_iter()
+		.map(to_waiting_time)
 		.collect();
 	Ok(resp)
 }
