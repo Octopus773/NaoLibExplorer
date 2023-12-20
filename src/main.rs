@@ -5,26 +5,23 @@ use tokio;
 mod api;
 mod naolibexplorer;
 
-use api::*;
+// use api::*;
 
 const APP_ID: &str = "org.Octopus773.Naolibexplorer";
 
 #[tokio::main]
 async fn main() -> glib::ExitCode {
 	// Create a new application
-	let app = Application::builder().application_id(APP_ID).build();
+	let app = adw::Application::builder().application_id(APP_ID).build();
 
 	// Connect to "activate" signal of `app`
 	app.connect_activate(build_ui);
-
-	let res = get_near_stops(47.2059591, -1.5605108).await.unwrap();
-	println!("{:#?}", &res);
 
 	// Run the application
 	app.run()
 }
 
-fn build_ui(app: &Application) {
+fn build_ui(app: &adw::Application) {
 	// Create a button with label and margins
 	let button = Button::builder()
 		.label("Press me!")
