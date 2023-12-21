@@ -16,7 +16,7 @@ jobs:
 
     steps:
     - name: Install/Update gtk
-      run: sudo apt install libgtk-4-dev build-essential
+      run: sudo apt install libglib2.0-dev libgtk-4-dev build-essential
     - uses: actions/checkout@v3
     - name: Build
       run: cargo build --verbose

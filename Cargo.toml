@@ -10,7 +10,7 @@ adw = { version = "0.5.3", package = "libadwaita", features = ["v1_4", "gtk_v4_1
 chrono = { version = "0.4.31", features = ["serde"] }
 gtk = { version = "0.7.3", package = "gtk4", features = [
     "v4_12",
-    "gnome_43",
+    "gnome_45",
     "xml_validation",
     "blueprint",
 ] }
