@@ -12,8 +12,7 @@ use api::*;
 
 const APP_ID: &str = "org.Octopus773.Naolibexplorer";
 
-#[tokio::main]
-async fn main() -> glib::ExitCode {
+fn main() -> glib::ExitCode {
 	// Create a new application
 	let app = adw::Application::builder().application_id(APP_ID).build();
 
@@ -52,7 +51,7 @@ fn build_ui(app: &adw::Application) {
 		// button.set_label("Hello World!");
 		glib::spawn_future_local(async {
 			let res = get_waiting_times().await;
-			println!("{:?}", res);
+			println!("{:?}", res.unwrap());
 		});
 		number.set(number.get() + 1);
 		but2.set_label(&number.get().to_string());
