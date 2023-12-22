@@ -27,7 +27,7 @@ jobs:
           cd glib-2.77.0
           meson setup _build
           meson compile -C _build
-          meson install -C _build
+          sudo meson install -C _build
       - name: Build
         run: cargo build --verbose
       - name: Run tests
