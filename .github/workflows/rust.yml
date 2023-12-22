@@ -24,7 +24,7 @@ jobs:
           wget https://download.gnome.org/sources/glib/2.77/glib-2.77.0.tar.xz
           tar xf glib-*.tar.xz
           ls -l
-          cd glib-*
+          cd glib-2.77.0
           meson setup _build
           meson compile -C _build
           meson install -C _build
