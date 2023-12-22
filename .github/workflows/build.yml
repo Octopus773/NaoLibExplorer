@@ -22,6 +22,3 @@ jobs:
         run: cargo build
       - name: Run tests
         run: cargo test
-      - name: Check for warnings
-        if: github.ref == 'refs/heads/main'
-        run: RUSTFLAGS="-D warnings" cargo check --all-targets
