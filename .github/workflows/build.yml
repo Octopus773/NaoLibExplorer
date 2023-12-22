@@ -1,8 +1,6 @@
 name: Build and test
-# run on push for all branches
 on:
   push:
-    # branches: [ "main" ]
   pull_request:
     branches: ["main"]
 
@@ -24,3 +22,6 @@ jobs:
         run: cargo build
       - name: Run tests
         run: cargo test
+      - name: Check for warnings
+        if: github.ref == 'refs/heads/main'
+        run: RUSTFLAGS="-D warnings" cargo check --all-targets
