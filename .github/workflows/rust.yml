@@ -22,11 +22,11 @@ jobs:
       - name: Build and install glib
         run: |
           wget https://download.gnome.org/sources/glib/2.77/glib-2.77.0.tar.xz
-          tar xf glib-2.77.0.tar.xz
-          cd glib-2.77.0
-          ./configure
-          make
-          sudo make install
+          tar xf glib-*.tar.gz
+          cd glib-*
+          meson setup _build
+          meson compile -C _build
+          meson install -C _build
       - name: Build
         run: cargo build --verbose
       - name: Run tests
