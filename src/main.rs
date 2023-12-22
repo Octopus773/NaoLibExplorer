@@ -1,4 +1,3 @@
-#![feature(const_option)]
 use std::rc::Rc;
 use std::thread;
 use std::{cell::Cell, time::Duration};
