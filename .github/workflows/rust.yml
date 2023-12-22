@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-4-dev build-essential meson ninja-build
+          sudo apt-get install -y libgtk-4-dev build-essential meson ninja-build libcogl-pango-dev
       - name: Build and install glib
         run: |
           wget https://download.gnome.org/sources/glib/2.77/glib-2.77.0.tar.xz
