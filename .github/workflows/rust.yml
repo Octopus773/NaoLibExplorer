@@ -1,4 +1,4 @@
-name: Rust
+name: Build and test
 # run on push for all branches
 on:
   push:
@@ -18,16 +18,16 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-4-dev build-essential meson ninja-build libcogl-pango-dev
-      - name: Build and install glib
-        run: |
-          wget https://download.gnome.org/sources/glib/2.77/glib-2.77.0.tar.xz
-          tar xf glib-*.tar.xz
-          ls -l
-          cd glib-2.77.0
-          meson setup _build
-          meson compile -C _build
-          sudo meson install -C _build
+          sudo apt-get install -y libgtk-4-dev build-essential meson ninja-build libcogl-pango-dev libglib2.0-dev
+      # - name: Build and install glib
+      #   run: |
+      #     wget https://download.gnome.org/sources/glib/2.77/glib-2.77.0.tar.xz
+      #     tar xf glib-*.tar.xz
+      #     ls -l
+      #     cd glib-2.77.0
+      #     meson setup _build
+      #     meson compile -C _build
+      #     sudo meson install -C _build
       - name: Build
         run: cargo build --verbose
       - name: Run tests
