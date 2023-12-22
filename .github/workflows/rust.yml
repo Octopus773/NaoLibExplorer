@@ -22,8 +22,8 @@ jobs:
       - name: Build and install glib
         run: |
           wget https://download.gnome.org/sources/glib/2.77/glib-2.77.0.tar.xz
-          tar xf glib-*.tar.gz
-          cd glib-*
+          tar xf glib-2.77.0.tar.gz
+          cd glib-2.77.0
           meson setup _build
           meson compile -C _build
           meson install -C _build
