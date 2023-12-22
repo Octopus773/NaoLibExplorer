@@ -19,7 +19,7 @@ jobs:
       - uses: actions-rust-lang/setup-rust-toolchain@v1
       - name: Install dependencies
         run: |
-          sudo dnf install -y gtk4-devel gcc openssl-devel
+          sudo dnf install -y gtk4-devel gcc openssl-devel libadwaita-devel
       - name: Build
         run: cargo build
       - name: Run tests
